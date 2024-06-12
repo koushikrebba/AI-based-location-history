@@ -1,8 +1,15 @@
 import React from 'react'
+import Routing from './Routing'
 
 function App() {
   return (
-    <div className=''>App</div>
+    <div>
+      {/* <div className='text-center'>
+        <a href="/sign-in">Sign In</a>
+      </div> */}
+      <Routing/>
+    </div>
+
   )
 }
 
