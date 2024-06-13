@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import Video from '../assets/landVideo.mp4'
 function LandingPage() {
 
@@ -33,6 +34,7 @@ function LandingPage() {
         </div>
         <div style={{width:"470px",marginRight:"6.3rem"}} className="centered-text mt-5">
             <p style={{fontSize:"1.2rem"}} className='animated text-center'>{displayText}</p>
+            <Link className='d-flex justify-content-center' to='/signup'><button className='btn btn-success text-center'>Sign Up</button></Link>
         </div>
     </div>
   )

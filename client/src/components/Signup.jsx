@@ -7,12 +7,21 @@ import { Link } from 'react-router-dom'
 function SignUp() {
 
     let { register, handleSubmit, formState: { errors } } = useForm()
-    // let navigate = useNavigate()
-    function onSignupFormSubmit(newUser){
-        console.log(newUser)
+    let navigate = useNavigate()
+    async function onSignupFormSubmit(newUser){
+        try {
+            let res = await axios.post('http://localhost:4000/new-user', newUser)
+            if (res.data.message === 'user created') {
+                navigate('/login')
+            } else {
+                alert(res.data.message)
+            }
+        } catch (error) {
+            alert('An error occured. Please try again later...')
+        }
     }
     return (
-        <div style={{ paddingTop: '70px' }}>
+        <div style={{ paddingTop: '50px' }}>
             <div className='bg-dark w-25 mx-auto p-3 rounded-2'>
                 <h1 className='text-center text-primary mb-4'>SignUp</h1>
                 <form onSubmit={handleSubmit(onSignupFormSubmit)}>

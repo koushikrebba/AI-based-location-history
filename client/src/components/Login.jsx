@@ -1,16 +1,29 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { CounterContext } from '../CounterContext'
+import { CounterContext } from './CounterContext'
 import axios from 'axios'
 
 function Login() {
     let { register, handleSubmit, formState: { errors } } = useForm()
     let [errorMessage, setErrorMessage] = useState('')
-    // let { user, setUser } = useContext(CounterContext)
-    // let navigate=useNavigate()
-    function onSigninFormSubmit(){
-        
+    let { user, setUser } = useContext(CounterContext)
+    let navigate=useNavigate()
+    async function onSigninFormSubmit(formData){
+        try {
+            let res = await axios.post('http://localhost:4000/login', formData)
+            if (res.data.message === 'login success') {
+                let token = res.data.token
+                localStorage.setItem('token', token)
+                setUser(res.data.user)
+                navigate(`/`)
+            }
+            else {
+                setErrorMessage(res.data.message)
+            }
+        }catch(error){
+            setErrorMessage('An error occured. Please try again')
+        }
     }
 
     return (
