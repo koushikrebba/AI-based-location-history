@@ -1,9 +1,24 @@
 import React from 'react'
-import Home from './components/LandingPage'
+import './index.css'
+import RootLayout from './RootLayout'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 function App() {
+
+
+  const router = createBrowserRouter([
+    {
+      path:'/',
+      element : <RootLayout />,
+    }
+  ])
+
+
+
   return (
     <div className="">
-      <Home></Home>
+      <RouterProvider router={router}>
+
+      </RouterProvider>
     </div>
 
   )
