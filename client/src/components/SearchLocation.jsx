@@ -290,6 +290,7 @@
 
 
 import React, { useState, useEffect, useContext } from "react";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
@@ -340,7 +341,16 @@ function GoogleMap({ coordinates }) {
 }
 
 function SearchLocation() {
-  
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  // if (!browserSupportsSpeechRecognition) {
+  //   return <span>Browser doesn't support speech recognition.</span>;
+  // }
   const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
   const [answerHistory, setAnswerHistory] = useState("");
@@ -471,6 +481,10 @@ function SearchLocation() {
         
         <form onSubmit={handleSubmit} className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 py-2 p-5 bg-secondary">
           <h1 className="text-3xl text-center pb-3">Search Location</h1>
+          <button onClick={SpeechRecognition.startListening}>Start</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <button onClick={resetTranscript}>Reset</button>
+
           <textarea
             required
             className="form-control my-2 p-0 "

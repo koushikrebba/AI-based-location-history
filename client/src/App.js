@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css'
 import RootLayout from './RootLayout'
+import Voice from './components/Voice'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SignUp from './components/Signup'
 import Login from './components/Login'
@@ -34,6 +35,9 @@ function App() {
         {
           path:'/search',
           element:<SearchLocation/>
+        },{
+          path:'/voice',
+          element: <Voice />
         }
       ]
     }
