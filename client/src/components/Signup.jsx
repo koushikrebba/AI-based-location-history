@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Navbar from './Navbar'
 import { Link } from 'react-router-dom'
 
 function SignUp() {
@@ -22,6 +23,7 @@ function SignUp() {
     }
     return (
         <div style={{ paddingTop: '50px' }}>
+            <Navbar></Navbar>
             <div className='bg-dark w-25 mx-auto p-3 rounded-2'>
                 <h1 className='text-center text-primary mb-4'>SignUp</h1>
                 <form onSubmit={handleSubmit(onSignupFormSubmit)}>

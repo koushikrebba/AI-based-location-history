@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import Navbar from './Navbar'
 import { CounterContext } from './CounterContext'
 import axios from 'axios'
 
@@ -28,6 +29,7 @@ function Login() {
 
     return (
         <div style={{ paddingTop: '70px' }}>
+            <Navbar></Navbar>
             <div className='bg-dark w-25 mx-auto p-3 rounded-2'>
                 <h1 className='text-center text-primary mb-4'>LogIn</h1>
                 <form onSubmit={handleSubmit(onSigninFormSubmit)}>
