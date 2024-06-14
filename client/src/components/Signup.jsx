@@ -26,7 +26,7 @@ function SignUp() {
     return (
         <div>
             <Navbar></Navbar>
-        <div className='d-flex justify-content-center' style={{paddingTop:"110px"}}>
+        <div className='d-flex justify-content-center mb-48' style={{paddingTop:"130px"}}>
         <div className="" style={{ boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"}}>
             <img className=' rounded-3' style={{height:"394px"}} src={History} alt="" />
         </div>
@@ -112,6 +112,7 @@ function SignUp() {
         </form>
         </div>
         </div>
+        <Footer></Footer>
         </div>
 
     )

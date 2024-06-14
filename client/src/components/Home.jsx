@@ -1,16 +1,34 @@
 import React from "react";
+import { useContext } from "react";
+import { CounterContext } from './CounterContext'
 import "./Home.css";
 import Navbar from "./Navbar";
+import Footer from './Footer'
 import Un from "../assets/undraw_artificial_intelligence_re_enpp.svg";
 import Travel from '../assets/travel1.svg'
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  let { user, setUser } = useContext(CounterContext)
+
+  let navigate = useNavigate();
+
+  function redirect(){
+    navigate('/search')
+  }
+
   return (
     <div>
       <div className="homepage">
         {/* Hero Section */}
         <Navbar></Navbar>
-        <div className="ms-4 me-4  mb-5" style={{ marginTop: "100px" }}>
+        {
+          user && <div className="text-center">
+            <h5 className="mt-14 text-3xl d-inline-block" style={{color:"transparent",width:"500px",backgroundImage:"linear-gradient(to right, #c94b4b, #4b134f)",backgroundClip:"text"}} >Welcome {user.firstname}, Explore our Services</h5>
+            <button className="btn btn-secondary " style={{position:"absolute",top:"146px"}} onClick={redirect}> Search Location </button>
+          </div>
+        }
+        <div className="ms-4 me-4  mb-5" style={{ marginTop: "90px" }}>
           <div className="d-flex justify-content-between mt-5 ">
             <img className="ms-5" width={"500px"} src={Un} alt="" />
             <section
@@ -134,7 +152,7 @@ const Home = () => {
             <img className="me-5" width={"500px"} src={Travel} alt="" />
           </div>
         </div>
-
+      <Footer/>
 
     </div>
   );

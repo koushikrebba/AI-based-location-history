@@ -5,6 +5,7 @@ import { CounterContext } from './CounterContext'
 import axios from 'axios'
 import Navbar from './Navbar'
 import Travels from '../assets/travels.jpeg'
+import Footer from './Footer'
 
 function Login() {
     let { register, handleSubmit, formState: { errors } } = useForm()
@@ -33,7 +34,7 @@ function Login() {
     return (
         <div>
             <Navbar></Navbar>
-        <div className='d-flex justify-content-center' style={{paddingTop:"110px"}}>
+        <div className='d-flex justify-content-center mb-48' style={{paddingTop:"130px"}}>
         
         <div className="">
         <form onSubmit={handleSubmit(onSigninFormSubmit)} className="max-w-sm mx-auto pt-3 pb-3 ps-3 border rounded-3" style={{height:"390px",width:"600px",background:"", boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"}}>
@@ -85,10 +86,10 @@ function Login() {
         </form>
         </div>
         <div className="" style={{ boxShadow: "rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px"}}>
-            <img className=' rounded-3' style={{height:"395px"}} src={Travels} alt="" />
+            <img className=' rounded-3' style={{height:"390px"}} src={Travels} alt="" />
         </div>
         </div>
-        
+        <Footer></Footer>
         </div>
 
     )
