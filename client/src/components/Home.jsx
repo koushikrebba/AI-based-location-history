@@ -8,6 +8,7 @@ const Home = () => {
         <Navbar/>
         <div className="homepage">
       {/* Hero Section */}
+      <Navbar></Navbar>
       <section className="hero">
         <div className="hero-content">
           <h1>AI-Powered Location Insights</h1>
