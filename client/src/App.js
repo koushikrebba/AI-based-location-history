@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SignUp from './components/Signup'
 import Login from './components/Login'
 import LandPage from './components/LandingPage'
+import Home from './components/Home'
 function App() {
 
 
@@ -16,6 +17,10 @@ function App() {
         {
           path:'',
           element:<LandPage/>
+        },
+        {
+          path:'/home',
+          element:<Home/>
         },
         {
           path:'/login',
