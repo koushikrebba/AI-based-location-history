@@ -7,18 +7,20 @@ const Home = () => {
     <div className="homepage">
       {/* Hero Section */}
       <Navbar></Navbar>
-      <section className="hero">
+      <div className="">
+      <section style={{background:" background: linear-gradient(to bottom, #1a237e, #0288d1, #009688, #4caf50, #8bc34a, #cddc39, #ffeb3b, #ffc107, #ff9800, #ff5722, #e64a19, #bf360c);"}} className="hero">
         <div className="hero-content">
           <h1>AI-Powered Location Insights</h1>
           <p>Explore your location history with advanced AI analytics.</p>
-          <a href="#features" className="btn">Discover More</a>
+          <a href="#features" className="btn btn-outline-warning">Discover More</a>
         </div>
       </section>
+      </div>
 
       {/* Features Section */}
-      <section className="features bg-info" id="features">
+      <section className="features" id="features">
         <div className="container">
-          <h2>Features</h2>
+          <h2 className='text-white'>Features</h2>
           <div className="feature-cards">
             <div className="feature-card">
               <i className="fas fa-map-marked-alt"></i>
@@ -40,7 +42,7 @@ const Home = () => {
       </section>
 
       {/* About Section */}
-      <section className="about" id="about">
+      <section className="about text-white" id="about">
         <div className="container">
           <h2>About Us</h2>
           <p>We are dedicated to transforming your location data into actionable insights using cutting-edge AI algorithms.</p>
