@@ -41,7 +41,7 @@ body::-webkit-scrollbar {
     font-size: 3rem; 
     font-weight: bold;
     text-align: center;
-    background: linear-gradient(135deg, #3a8748, #6aeae1);
+    background: linear-gradient(135deg, #ffffff, #00ffee);
     -webkit-background-clip: text;
     color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
@@ -138,11 +138,11 @@ body::-webkit-scrollbar {
 }
 
 /* Blur effect for scrolling */
-.navbar.fixed-top {
+/* .navbar.fixed-top {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
+} */
 
 .offcanvas-body {
   display: flex;
@@ -185,7 +185,7 @@ body.scrolled .navbar.fixed-top {
 }
 
 .active{
-  color: green !important;
+  color: rgb(54, 196, 196) !important;
 }
   
 .nav-link {

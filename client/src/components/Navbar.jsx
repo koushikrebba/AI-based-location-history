@@ -13,10 +13,10 @@ function Navbar() {
     }
 
     return (
-        <div className="navbar-container">
-            <nav className="navbar navbar-expand-lg fixed-top">
-                <div className="container-fluid p-2">
-                    <a className="navbar-brand me-auto" href="#">Logo</a>
+        <div className="navbar-container ">
+            <nav className="navbar navbar-expand-lg  text-white w-90 ms-1 me-1 mt-2 pe-4" style={{backgroundColor:"#1A151A",borderRadius:"20px"}}>
+                <div className="container-fluid p-1">
+                    <img className='ms-5' style={{width:"50px"}} src="https://4.bp.blogspot.com/-pLeslkixF-I/XIEPjEcrdQI/AAAAAAAAA58/JahHA3E6dCki9bmgPbGvwwIDWHkC_3SbACLcBGAs/s1600/logos_geoimage_v3.png" alt="" />
                     <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
