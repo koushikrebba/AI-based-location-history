@@ -17,7 +17,7 @@ function Login() {
                 let token = res.data.token
                 localStorage.setItem('token', token)
                 setUser(res.data.user)
-                navigate(`/`)
+                navigate('/home')
             }
             else {
                 setErrorMessage(res.data.message)

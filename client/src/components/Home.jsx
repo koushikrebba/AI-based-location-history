@@ -5,7 +5,9 @@ import Un from '../assets/undraw_artificial_intelligence_re_enpp.svg'
 
 const Home = () => {
   return (
-    <div className="homepage">
+    <div>
+        <Navbar/>
+        <div className="homepage">
       {/* Hero Section */}
       <Navbar></Navbar>
       <div className='ms-4 me-4  mb-5' style={{marginTop:"100px"}}>
@@ -64,6 +66,8 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </div>
+    
   );
 };
 

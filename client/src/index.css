@@ -183,5 +183,23 @@ body.scrolled .navbar.fixed-top {
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.active{
+  color: green !important;
+}
   
+.nav-link {
+  color: #333; /* Default link color */
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #555; /* Link color on hover */
+}
+
+.nav-link.active {
+  font-weight: bold; /* Active link font weight */
+}
   
