@@ -2,7 +2,7 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div className="">
+    <div className="navBar">
       <nav className="navbar navbar-expand-lg fixed-top">
             <div className="container-fluid">
                 <a className="navbar-brand me-auto" href="#">Logo</a>

@@ -1,9 +1,12 @@
 import React from 'react';
 import './Home.css'
+import Navbar from './Navbar';
 
 const Home = () => {
   return (
-    <div className="homepage">
+    <div>
+        <Navbar/>
+        <div className="homepage">
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
@@ -56,6 +59,8 @@ const Home = () => {
         </div>
       </section>
     </div>
+    </div>
+    
   );
 };
 
