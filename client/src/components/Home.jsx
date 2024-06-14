@@ -1,10 +1,12 @@
 import React from 'react';
 import './Home.css'
+import Navbar from './Navbar';
 
 const Home = () => {
   return (
     <div className="homepage">
       {/* Hero Section */}
+      <Navbar></Navbar>
       <section className="hero">
         <div className="hero-content">
           <h1>AI-Powered Location Insights</h1>
