@@ -6,6 +6,7 @@ import SignUp from './components/Signup'
 import Login from './components/Login'
 import LandPage from './components/LandingPage'
 import Home from './components/Home'
+import SearchLocation from './components/SearchLocation'
 function App() {
 
 
@@ -29,6 +30,10 @@ function App() {
         {
           path:'/signup',
           element:<SignUp/>
+        },
+        {
+          path:'/search',
+          element:<SearchLocation/>
         }
       ]
     }
