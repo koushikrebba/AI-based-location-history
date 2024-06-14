@@ -5,6 +5,7 @@ import History from '../assets/history1.jpeg'
 import axios from 'axios'
 import Navbar from './Navbar'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 
 function SignUp() {
 
