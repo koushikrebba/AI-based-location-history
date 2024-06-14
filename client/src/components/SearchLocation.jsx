@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./Navbar";
 
-const GOOGLE_API_KEY = "AIzaSyANjv75bwjbuple_GtfC1qTnxjMe_V9xHM";
-const SEARCH_ENGINE_ID = "6537b03c199ee4ac5";
-const GEMINI_API_KEY = "AIzaSyB6TYVM21zS6ZGW9Rr0asOgHxdLTM8mTpA";
+const GOOGLE_API_KEY = "AIzaSyD-BlTMfNJlz1b9KNgluIZ84wAG8ePOPgs";
+const SEARCH_ENGINE_ID = "f7bbf16bf4357421d";
+const GEMINI_API_KEY = "AIzaSyDBEWj146SV_kfPYtQFIyTZEE_l0AiCidA";
 
 function GoogleMap({ coordinates }) {
   const mapUrl = `https://maps.google.com/maps?q=${coordinates.latitude},${coordinates.longitude}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
@@ -47,7 +47,7 @@ function GoogleMap({ coordinates }) {
   );
 }
 
-function App() {
+function SearchLocation() {
   const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
   const [answerHistory, setAnswerHistory] = useState("");
@@ -56,6 +56,18 @@ function App() {
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
   const [coordinates, setCoordinates] = useState({});
   const [activeTab, setActiveTab] = useState("history");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [images]);
+
 
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -75,7 +87,7 @@ function App() {
 
     try {
       const imageResponse = await axios.get(
-        `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&searchType=image&q=${query}&num=2`
+        `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&searchType=image&q=${query}&num=4`
       );
 
       if (!imageResponse.data.items) {
@@ -115,7 +127,7 @@ function App() {
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: `The latitude of ${query}` }] }],
+          contents: [{ parts: [{ text: `The very accurate latitude of ${query}` }] }],
         },
       });
 
@@ -137,7 +149,7 @@ function App() {
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: `The longitude of ${query}` }] }],
+          contents: [{ parts: [{ text: `The very accurate longitude of ${query}` }] }],
         },
       });
 
@@ -161,7 +173,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-white h-screen p-3">
+      <div className="bg-white h-screen p-3" style={{marginTop:'100px'}}>
         <Navbar/>
         <form onSubmit={handleSubmit} className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 py-2 p-5 bg-secondary">
           <h1 className="text-3xl text-center pb-3">Search Location</h1>
@@ -181,16 +193,30 @@ function App() {
           </button>
         </form>
 
-        <div className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 my-1">
+        {/* <div className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 my-1">
           <div className="d-flex flex-wrap justify-content-center">
             {images.map((image, index) => (
               <div key={index} className="card m-2" style={{ width: "200px" }}>
                 <img src={image.link} className="card-img-top" alt={image.title} />
-                <div className="card-body">
-                  {/* <p className="card-text">{image.title}</p> */}
-                </div>
+                
               </div>
             ))}
+          </div>
+        </div> */}
+
+
+        <div className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 my-1">
+          <div className="d-flex justify-content-center">
+            {images.length > 0 && (
+              <div className="card m-2" style={{ width: "300px" }}>
+                <img
+                  src={images[currentImageIndex].link}
+                  className="card-img-top"
+                  alt={images[currentImageIndex].title}
+                  style={{ width: "300px", height: "350px", objectFit: "cover" }}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -198,21 +224,21 @@ function App() {
           <div style={{gap:'100px',marginLeft:'220px'}} className="btn-group mb-3" role="group" aria-label="Basic example">
             <button
               type="button"
-              className={`btn ${activeTab === "history" ? "btn-primary" : "btn-outline-primary"}`}
+              className={`btn ${activeTab === "history" ? "btn-success" : "btn-outline-success"}`}
               onClick={() => setActiveTab("history")}
             >
               History
             </button>
             <button
               type="button"
-              className={`btn ${activeTab === "importance" ? "btn-primary" : "btn-outline-primary"}`}
+              className={`btn ${activeTab === "importance" ? "btn-success" : "btn-outline-success"}`}
               onClick={() => setActiveTab("importance")}
             >
               Importance
             </button>
             <button
               type="button"
-              className={`btn ${activeTab === "event" ? "btn-primary" : "btn-outline-primary"}`}
+              className={`btn ${activeTab === "event" ? "btn-success" : "btn-outline-success"}`}
               onClick={() => setActiveTab("event")}
             >
               Events
@@ -257,4 +283,9 @@ function App() {
   );
 }
 
-export default App;
+export default SearchLocation;
+
+
+
+
+

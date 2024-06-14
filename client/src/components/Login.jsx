@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { CounterContext } from './CounterContext'
 import axios from 'axios'
 import Navbar from './Navbar'
+import Footer from './Footer'
 
 function Login() {
     let { register, handleSubmit, formState: { errors } } = useForm()
@@ -44,6 +45,7 @@ function Login() {
                 </form>
                 <p className='text-white text-center mt-3'>New User ! <Link to='/signup'>SignUp</Link> </p>
             </div>
+            <Footer/>
         </div>
 
     )

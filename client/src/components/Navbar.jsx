@@ -10,6 +10,7 @@ function Navbar() {
     function handleLogout() {
         localStorage.removeItem('token')
         setUser(null)
+        navigate('/home')
     }
 
     return (
@@ -33,7 +34,7 @@ function Navbar() {
                                 </>
                             ) : (
                                 <>
-                                    <NavLink to='/search' className='nav-link'>Location</NavLink>
+                                    <NavLink to='/search' className='nav-link'>Search Location</NavLink>
                                     <span onClick={handleLogout} style={{ cursor: 'pointer' }}><b className='fs-6'>Logout</b></span>
                                     <div className='text-center'>
                                         <h6 style={{ display: 'block' }}>Welcome</h6>

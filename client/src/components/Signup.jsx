@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './Navbar'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 
 function SignUp() {
 
@@ -42,6 +43,7 @@ function SignUp() {
                 </form>
                 <p className='text-white text-center mt-3'>Already SignedUp ! <Link to='/login'>LogIn</Link> </p>
             </div>
+            <Footer/>
         </div>
 
     )
