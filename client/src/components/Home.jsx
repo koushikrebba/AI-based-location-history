@@ -25,7 +25,7 @@ const Home = () => {
         {
           user && <div className="text-center">
             <h5 className="mt-14 text-3xl d-inline-block" style={{color:"transparent",width:"500px",backgroundImage:"linear-gradient(to right, #c94b4b, #4b134f)",backgroundClip:"text"}} >Welcome {user.firstname}, Explore our Services</h5>
-            <button className="btn btn-secondary " style={{position:"absolute",top:"146px"}} onClick={redirect}> Search Location </button>
+            <button className="btn btn-secondary " style={{position:"absolute",top:"130px"}} onClick={redirect}> Search Location </button>
           </div>
         }
         <div className="ms-4 me-4  mb-5" style={{ marginTop: "90px" }}>

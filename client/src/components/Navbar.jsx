@@ -36,8 +36,7 @@ function Navbar() {
                                 <>
                                     <NavLink to='/search' className='nav-link'>Search Location</NavLink>
                                     <span onClick={handleLogout} style={{ cursor: 'pointer' }}><b className='fs-6'>Logout</b></span>
-                                    <div className='text-center'>
-                                        <h6 style={{ display: 'block' }}>Welcome</h6>
+                                    <div className='text-center mt-2'>
                                         <h5>{user.firstname} {user.lastname}</h5>
                                     </div>
                                 </>
