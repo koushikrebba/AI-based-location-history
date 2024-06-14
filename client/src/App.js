@@ -4,7 +4,7 @@ import RootLayout from './RootLayout'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import SignUp from './components/Signup'
 import Login from './components/Login'
-import Home from './components/LandingPage'
+import LandPage from './components/LandingPage'
 function App() {
 
 
@@ -15,7 +15,7 @@ function App() {
       children:[
         {
           path:'',
-          element:<Home/>
+          element:<LandPage/>
         },
         {
           path:'/login',

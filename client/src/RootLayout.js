@@ -6,7 +6,7 @@ import './index.css'
 function RootLayout() {
   return (
     <div className="">
-       <Navbar />
+       {/* <Navbar /> */}
        <div className="" style={{minHeight:"90vh"}}>
        <Outlet />
        </div>

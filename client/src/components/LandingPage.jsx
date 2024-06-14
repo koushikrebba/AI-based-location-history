@@ -34,7 +34,10 @@ function LandingPage() {
         </div>
         <div style={{width:"470px",marginRight:"6.3rem"}} className="centered-text mt-5">
             <p style={{fontSize:"1.2rem"}} className='animated text-center'>{displayText}</p>
-            <Link className='d-flex justify-content-center' to='/signup'><button className='btn btn-success text-center'>Sign Up</button></Link>
+            <Link style={{textDecoration:"none"}} className='d-flex justify-content-center' to='/signup'>
+            <button className="btn btn-outline-info p-2">
+            Get Started <span className='mt-5'>{'>>'}</span> 
+        </button></Link>
         </div>
     </div>
   )
