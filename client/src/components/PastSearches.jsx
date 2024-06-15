@@ -14,7 +14,7 @@ function PastSearches() {
     useEffect(() => {
         if (!email) {
             setLoading(false);
-            return; // Exit early if no email is found
+            return; 
         }
 
         let isMounted = true;
@@ -54,39 +54,41 @@ function PastSearches() {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar className=""/>
             {searches.length > 0 ? (
-                <ul>
+                <div className='p-5 bg-dark text-white mt-5 ms-2 me-2 rounded-3'>
+                    <ul className="list-group ">
                     {searches.map((search, index) => (
-                        <li key={index}>
+                        <li key={index} className="list-group-item mb-3">
                             <div><strong>City:</strong> {search.city}</div>
                             <div>
                                 <strong>History:</strong>
-                                <ul>
+                                <ul className="list-group">
                                     {search.history.split('\n\n').map((item, idx) => (
-                                        <li key={idx}>{item}</li>
+                                        <li key={idx} className="list-group-item">{item}</li>
                                     ))}
                                 </ul>
                             </div>
                             <div>
                                 <strong>Events:</strong>
-                                <ul>
+                                <ul className="list-group">
                                     {search.events.split('\n').map((item, idx) => (
-                                        <li key={idx}>{item}</li>
+                                        <li key={idx} className="list-group-item">{item}</li>
                                     ))}
                                 </ul>
                             </div>
                             <div>
                                 <strong>Importance:</strong>
-                                <ul>
+                                <ul className="list-group">
                                     {search.importance.split('**').map((item, idx) => (
-                                        <li key={idx}>{item}</li>
+                                        <li key={idx} className="list-group-item">{item}</li>
                                     ))}
                                 </ul>
                             </div>
                         </li>
                     ))}
                 </ul>
+                </div>
             ) : (
                 <p className='text-center text-3xl' style={{paddingBottom:"300px",paddingTop:"300px"}}>No past searches found.</p>
             )}

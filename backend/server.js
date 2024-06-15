@@ -66,6 +66,7 @@ app.post('/login',async(req,res)=>{
 
 app.post('/add-past',async(req,res)=>{
     const data = req.body;
+    console.log(data)
     await pastSearchesCollection.insertOne(data);
 })
 
