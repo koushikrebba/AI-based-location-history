@@ -492,11 +492,6 @@ function SearchLocation() {
     setGeneratingAnswer(false);
   };
 
-  
-
-  
-
-
   return (
     <>
       <div className="">
