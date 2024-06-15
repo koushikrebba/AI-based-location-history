@@ -296,6 +296,10 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./Navbar";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { FiMic } from "react-icons/fi";
+import { IoMicOffOutline } from "react-icons/io5";
+import { GrPowerReset } from "react-icons/gr";
 
 const GOOGLE_API_KEY = "AIzaSyD-BlTMfNJlz1b9KNgluIZ84wAG8ePOPgs";
 const SEARCH_ENGINE_ID = "f7bbf16bf4357421d";
@@ -341,16 +345,14 @@ function GoogleMap({ coordinates }) {
 }
 
 function SearchLocation() {
+
   const {
     transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
-
-  // if (!browserSupportsSpeechRecognition) {
-  //   return <span>Browser doesn't support speech recognition.</span>;
-  // }
+  
   const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
   const [answerHistory, setAnswerHistory] = useState("");
@@ -360,6 +362,7 @@ function SearchLocation() {
   const [coordinates, setCoordinates] = useState({});
   const [activeTab, setActiveTab] = useState("history");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [inputMode, setInputMode] = useState("manual"); // 'manual' or 'voice'
 
   useEffect(() => {
     if (images.length > 0) {
@@ -374,6 +377,22 @@ function SearchLocation() {
 
   const handleChange = (event) => {
     setQuery(event.target.value);
+    setInputMode("manual");
+  };
+
+  const handleStartVoiceInput = () => {
+    setInputMode("voice");
+    SpeechRecognition.startListening();
+  };
+
+  const handleStopVoiceInput = () => {
+    SpeechRecognition.stopListening();
+  };
+
+  const handleReset = () => {
+    resetTranscript();
+    setQuery("");
+    setInputMode("manual");
   };
 
   const handleSubmit = async (event) => {
@@ -384,13 +403,13 @@ function SearchLocation() {
     setImages([]);
     setCoordinates({});
 
-    const promptHistory = `The history of ${query}`;
-    const promptImportance = `The importance of ${query}`;
-    const promptEvent = `The historical events took place in ${query}`;
+    const promptHistory = `The history of ${inputMode === "manual" ? query : transcript}`;
+    const promptImportance = `The importance of ${inputMode === "manual" ? query : transcript}`;
+    const promptEvent = `The historical events took place in ${inputMode === "manual" ? query : transcript}`;
 
     try {
       const imageResponse = await axios.get(
-        `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&searchType=image&q=${query}&num=4`
+        `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_API_KEY}&cx=${SEARCH_ENGINE_ID}&searchType=image&q=${inputMode === "manual" ? query : transcript}&num=4`
       );
 
       if (!imageResponse.data.items || imageResponse.data.items.length === 0) {
@@ -430,7 +449,7 @@ function SearchLocation() {
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: `The very accurate latitude of ${query}` }] }],
+          contents: [{ parts: [{ text:` The very accurate latitude of ${inputMode === "manual" ? query : transcript}` }] }],
         },
       });
 
@@ -452,7 +471,7 @@ function SearchLocation() {
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: `The very accurate longitude of ${query}` }] }],
+          contents: [{ parts: [{ text: `The very accurate longitude of ${inputMode === "manual" ? query : transcript}` }] }],
         },
       });
 
@@ -474,67 +493,74 @@ function SearchLocation() {
     setGeneratingAnswer(false);
   };
 
+  
+
+  
+
+
   return (
     <>
-      <div className="bg-white h-screen p-3" style={{ marginTop: '100px' }}>
+      <div className="">
         <Navbar />
         
-        <form onSubmit={handleSubmit} className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 py-2 p-5 bg-secondary">
-          <h1 className="text-3xl text-center pb-3">Search Location</h1>
-          <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
+        <form onSubmit={handleSubmit} className="w-50 mt-5 m-auto  rounded-4 " style={{backgroundImage:"linear-gradient(to right, #0f2027, #203a43, #2c5364)",boxShadow: "rgb(38, 57, 77) 0px 20px 30px -10px"}}>
+          <h1 className="text-3xl pt-10 ms-5 text-light">Search Location</h1>
+          <div className="d-flex">
+          <input type="text" className="form-control w-75 ms-5 mt-3" value={inputMode === "manual" ? query : transcript} required onChange={handleChange} placeholder="Enter a place" />
 
-          <textarea
-            required
-            className="form-control my-2 p-0 "
-            value={query}
-            onChange={handleChange}
-            placeholder="Enter a place"
-          ></textarea>
+          <div className="d-flex justify-content-center mt-3">
+            <button className="ms-3"  onClick={handleStartVoiceInput}><FiMic className="text-white" size={25} /></button>
+            <button className="ms-2" onClick={handleStopVoiceInput}><IoMicOffOutline size={30} className="text-white"/></button>
+            <button className="ms-2" onClick={handleReset}><GrPowerReset size={25} className="text-white" /></button>
+          </div>
+          </div>
           <button
             type="submit"
-            className="btn btn-primary mt-2"
+            className="btn mt-4 bg-light ms-5 mb-10"
             disabled={generatingAnswer}
           >
             Generate Results
           </button>
         </form>
 
-        <div className="w-full md:w-2/3 m-auto text-center rounded bg-gray-50 my-1">
-          <div className="d-flex justify-content-center">
-            {images.length > 0 && (
-              <div className="card m-2" style={{ width: "300px" }}>
-                <img
-                  src={images[currentImageIndex]?.link}
-                  className="card-img-top"
-                  alt={images[currentImageIndex]?.title}
-                  style={{ width: "300px", height: "350px", objectFit: "cover" }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
+        
 
-        <div className="w-full md:w-2/3 m-auto p-5 rounded bg-gray-50 my-1">
-          <div style={{ gap: '100px', marginLeft: '220px' }} className="btn-group mb-3" role="group" aria-label="Basic example">
+        {
+          answerHistory && <div className="mb-5">
+            
+        <div className=" mt-24 ms-5 me-5 rounded-4" style={{backgroundImage:"linear-gradient(to right, #0f2027, #203a43, #2c5364)",boxShadow:" rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"}}>
+        <div className="p-2 pt-5 min-h-[400px] m-auto max-w-[1000px] rounded-4">
+          {images.length > 0 && (
+            <img
+              src={images[currentImageIndex].link}
+              alt="Google Custom Search"
+              className="w-full max-h-[400px] object-cover rounded-lg mb-4"
+            />
+          )}
+          {/* {Object.keys(coordinates).length > 0 && <GoogleMap coordinates={coordinates} />} */}
+        </div>
+        <div className=" m-auto p-5 my-1 text-light" style={{width:"70%"}} >
+          <div style={{ gap: '100px', marginLeft: '220px' }} className="btn-group mb-5" role="group" aria-label="Basic example">
             <button
               type="button"
-              className={`btn ${activeTab === "history" ? "btn-success" : "btn-outline-success"}`}
+              className={`btn ${activeTab === "history" ? "btn-light" : "btn-outline-light"}`}
+              style={{borderRadius:"10px"}}
               onClick={() => setActiveTab("history")}
             >
               History
             </button>
             <button
               type="button"
-              className={`btn ${activeTab === "importance" ? "btn-success" : "btn-outline-success"}`}
+              className={`btn ${activeTab === "importance" ? "btn-light" : "btn-outline-light"}`}
+              style={{borderRadius:"10px"}}
               onClick={() => setActiveTab("importance")}
             >
               Importance
             </button>
             <button
               type="button"
-              className={`btn ${activeTab === "event" ? "btn-success" : "btn-outline-success"}`}
+              className={`btn ${activeTab === "event" ? "btn-light" : "btn-outline-light"}`}
+              style={{borderRadius:"10px"}}
               onClick={() => setActiveTab("event")}
             >
               Events
@@ -543,33 +569,57 @@ function SearchLocation() {
 
           {activeTab === "history" && (
             <div>
-              <h1 style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5" }}>History of {query}</h1>
+              <h1 className="ps-3" style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5"}}>History of {query} {transcript}</h1>
               <ReactMarkdown className="p-3">{answerHistory}</ReactMarkdown>
             </div>
           )}
           {activeTab === "importance" && (
             <div>
-              <h1 style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5" }}>Importance of {query}</h1>
+              <h1 className="ps-3" style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5" }}>Importance of {query} {transcript}</h1>
               <ReactMarkdown className="p-3">{answerImportance}</ReactMarkdown>
             </div>
           )}
           {activeTab === "event" && (
             <div>
-              <h1 style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5" }}>Events of {query}</h1>
+              <h1 className="ps-3" style={{ fontSize: "24px", fontWeight: "bold", lineHeight: "1.5" }}>Events of {query} {transcript}</h1>
               <ReactMarkdown className="p-3">{answerEvent}</ReactMarkdown>
             </div>
           )}
         </div>
 
+        {/* <div className=" m-auto text-center my-1 pt-5" style={{width:"30%"}}>
+          <div className="d-flex justify-content-center">
+            {images.length > 0 && (
+              <div className="card m-2" style={{ width: "300px" }}>
+                <img
+                  src={images[currentImageIndex]?.link}
+                  className="card-img-top"
+                  alt={images[currentImageIndex]?.title}
+                  style={{ width: "400px", height: "400px", objectFit: "cover" }}
+                />
+              </div>
+            )}
+          </div>
+        </div> */}
+        
+        </div>
+          </div>
+        }
+
+        
+
+        
+
         {coordinates.latitude && coordinates.longitude && (
           <div
             style={{
-              minHeight: "400px",
+              height: "300px",
               marginTop: "20px",
               borderRadius: "10px",
               overflow: "hidden",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
             }}
+            className="ms-5 me-5"
           >
             <GoogleMap coordinates={coordinates} />
           </div>
