@@ -35,6 +35,8 @@ function Navbar() {
                             ) : (
                                 <>
                                     <NavLink to='/search' className='nav-link'>Search Location</NavLink>
+                                    <NavLink to='/past-searches'className='nav-link'>Past Searches</NavLink>
+                                    <NavLink to='/videos' className='nav-link'>Videos</NavLink>
                                     <span onClick={handleLogout} style={{ cursor: 'pointer' }}><b className='fs-6'>Logout</b></span>
                                     <div className='text-center mt-2'>
                                         <h5>{user.firstname} {user.lastname}</h5>

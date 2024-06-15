@@ -19,6 +19,8 @@ function Login() {
                 let token = res.data.token
                 localStorage.setItem('token', token)
                 setUser(res.data.user)
+                let user=res.data.user
+                localStorage.setItem('user',user.email)
                 navigate('/home')
             }
             else {

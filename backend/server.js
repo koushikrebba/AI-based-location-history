@@ -11,7 +11,9 @@ mc.connect('mongodb+srv://srimanikantaBattu:XeoXcx5n7a0r9Qtu@srimanikanta-cluste
 .then(client=>{
     const dbObj=client.db('geochronicle')
     const usersCollectionObj=dbObj.collection('usersCollection')
+    const pastSearchesCollection=dbObj.collection('pastSearchesCollection')
     app.set('usersCollectionObj',usersCollectionObj)
+    app.set('pastSearchesCollection',pastSearchesCollection);
     console.log('DB Connection success')
 })
 .catch(err=>{
@@ -20,6 +22,7 @@ mc.connect('mongodb+srv://srimanikantaBattu:XeoXcx5n7a0r9Qtu@srimanikanta-cluste
 
 app.use((req,res,next)=>{
     usersCollectionObj=req.app.get('usersCollectionObj')
+    pastSearchesCollection=req.app.get('pastSearchesCollection')
     next()
 })
 
@@ -58,6 +61,18 @@ app.post('/login',async(req,res)=>{
             res.send({message:'invalid password'})
         }
     }
+})
+
+
+app.post('/add-past',async(req,res)=>{
+    const data = req.body;
+    await pastSearchesCollection.insertOne(data);
+})
+
+app.get('/past-search/:id',async(req,res)=>{
+    const id = req.params.id;
+    const searches = await pastSearchesCollection.find({user:id}).toArray();
+    res.status(200).json(searches);
 })
 
 
