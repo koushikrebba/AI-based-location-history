@@ -70,8 +70,10 @@ function SearchLocation() {
   const [coordinates, setCoordinates] = useState({});
   const [activeTab, setActiveTab] = useState("history");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [pastSearches, setPastSearches] = useState([]);
   let { user, setUser } = useContext(CounterContext)
   const [inputMode, setInputMode] = useState("manual"); // 'manual' or 'voice'
+
   useEffect(() => {
     if (images.length > 0) {
       const interval = setInterval(() => {
@@ -82,6 +84,27 @@ function SearchLocation() {
       return () => clearInterval(interval);
     }
   }, [images]);
+
+
+  useEffect(() => {
+    if (answerHistory && answerImportance && answerEvent) {
+      const newSearch = {
+        city: query || transcript,
+        history: answerHistory,
+        importance: answerImportance,
+        events: answerEvent,
+      };
+      setPastSearches((prevSearches) => [...prevSearches, newSearch]);
+
+      axios.post('http://localhost:4000/add-past', {
+        user: user.email,
+        city: newSearch.city,
+        history: newSearch.history,
+        events: newSearch.events,
+        importance: newSearch.importance
+      });
+    }
+  }, [answerHistory, answerImportance, answerEvent]);
 
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -189,15 +212,16 @@ function SearchLocation() {
       if (isNaN(latitude) || isNaN(longitude)) {
         throw new Error("Latitude or Longitude could not be determined");
       }
+      
 
-      if(answerHistory && answerEvent && answerImportance)
-      axios.post('http://localhost:4000/add-past',{
-    user:user.email,
-       city: query || transcript,
-       history: answerHistory,
-       events:answerEvent,
-       importance:answerImportance
-      })
+    //   if(answerHistory && answerEvent && answerImportance)
+    //   axios.post('http://localhost:4000/add-past',{
+    // user:user.email,
+    //    city: query || transcript,
+    //    history: answerHistory,
+    //    events:answerEvent,
+    //    importance:answerImportance
+    //   })
 
       setCoordinates({ latitude, longitude });
     } catch (error) {
